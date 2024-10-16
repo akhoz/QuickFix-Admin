@@ -1,14 +1,26 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import LandingPage from './pages/LandingPage';
+import Home from './pages/Home';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
+import Layout from './components/layout/Layout';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   return (
-    <div className="flex items-center justify-between w-screen h-screen">
-      <div className="flex items-center justify-center w-3/4">
-        Hello World
-      </div>
-      <div className="w-1/4 h-screen">
-        <img src="/images/hero.webp" className="h-screen" />
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <LandingPage />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/signup" element={<SignUp />} />
+
+        <Route element={<Layout />}>
+          <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
