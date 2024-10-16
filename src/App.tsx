@@ -5,22 +5,25 @@ import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Layout from './components/layout/Layout';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <LandingPage />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/signup" element={<SignUp />} />
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <LandingPage />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
 
-        <Route element={<Layout />}>
-          <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
-        </Route>
-      </Routes>
-    </Router>
+          <Route element={<Layout />}>
+            <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
