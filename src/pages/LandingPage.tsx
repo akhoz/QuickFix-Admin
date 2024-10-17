@@ -2,7 +2,6 @@ import CustomButton from "../components/common/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ToggleButton from "../components/common/ToggleButton";
-import ThemeButton from "../components/common/ThemeButton";
 import changeLanguage from "../functions/changeLanguage";
 import changeTheme from "../functions/changeTheme";
 import { useTheme } from "../contexts/ThemeContext";
@@ -25,9 +24,10 @@ function LandingPage() {
   };
 
   return (
-    <div className={`flex items-center justify-between w-screen h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      <div className="flex flex-col items-center justify-center w-3/4 space-y-10">
-        <div className="flex flex-col items-center justify-center w-5/12 space-y-3">
+    <div className={`relative flex flex-row items-center justify-between w-screen h-screen 
+      ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>
+      <div className="flex flex-col items-center justify-center w-full space-y-10 lg:w-3/4">
+        <div className="flex flex-col items-center justify-center w-2/3 space-y-3 md:w-1/2 lg:w-5/12">
           <h1 className="font-bold text-3xl">QuickFix</h1>
           <p className="text-center">{t('welcome_landing')}</p>
         </div>
@@ -35,19 +35,21 @@ function LandingPage() {
           <CustomButton onClick={handleLogInClick} text="Log In" />
           <CustomButton onClick={handleSignUpClick} text="Sign Up" />
         </div>
+      </div>
+      <div className="hidden lg:block w-1/4 h-screen">
+        <img src="/images/hero.webp" className="h-screen" />
+      </div>
+      <div className="absolute inset-5 flex flex-col w-fit h-fit space-y-2">
         <ToggleButton
-          onClick={changeLanguage} 
-          activeImage={"/images/spanish-icon.png"} 
+          onClick={changeLanguage}
+          activeImage={"/images/spanish-icon.png"}
           inactiveImage={"/images/english-icon.png"}
         />
-        <ThemeButton 
+        <ToggleButton
           onClick={handleThemeChange}
-          activeImage={"/images/moon.png"} 
+          activeImage={"/images/moon.png"}
           inactiveImage={"/images/sun.png"}
         />
-      </div>
-      <div className="w-1/4 h-screen">
-        <img src="/images/hero.webp" className="h-screen" />
       </div>
     </div>
   );

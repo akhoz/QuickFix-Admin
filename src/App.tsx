@@ -5,13 +5,12 @@ import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import Layout from './components/layout/Layout';
-import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   return (
-    <ThemeProvider>
+    <div className="flex items-center justify-center w-screen h-screen">
       <Router>
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <LandingPage />} />
@@ -23,7 +22,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </ThemeProvider>
+    </div>
   );
 }
 
