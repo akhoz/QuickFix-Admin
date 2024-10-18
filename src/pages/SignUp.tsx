@@ -4,6 +4,13 @@ import useInput from "../hooks/useInput";
 import CustomButton from "../components/common/CustomButton";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import useAxios from "../hooks/useAxios";
+import ROUTES from "../constants/routes";
+import Loading from "../components/common/Loading";
+
+interface WorkshopExistsType {
+  exists: boolean
+}
 
 function SignUp() {
   const navigate = useNavigate();
@@ -12,17 +19,107 @@ function SignUp() {
   const fiscalID = useInput('');
   const password = useInput('');
   const confirmationPassword = useInput('');
+
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    fiscalID?: string;
+    password?: string;
+    confirmationPassword?: string;
+  }>({});
+
+  const { data: invalidFiscalID, loading: loading, error: error, execute: checkIfWorkshopExists } = useAxios<WorkshopExistsType>({
+    url: `${ROUTES.workshops}/verify/${fiscalID.value}`,
+    method: "GET",
+    auto: false
+  }, [fiscalID.value])
+
   const [position, setPosition] = useState<{ lat: number; lng: number }>({
     lat: 10.360149,
     lng: -84.511006,
   });
 
-  const handleRegisterClick = () => {
-    console.log("Register Workshop");
-  }
+  const handleRegisterClick = async () => {
+    // Primero, validar el formulario
+    const isValid = validateForm();
+
+    if (!isValid) {
+      return;
+    }
+
+    try {
+      // Verificar si el Fiscal ID ya existe
+      await checkIfWorkshopExists();
+
+      // Después de la verificación, manejar la respuesta
+      if (invalidFiscalID?.exists) {
+        // Si isValid es true, significa que el Fiscal ID ya existe
+        setErrors(prev => ({ ...prev, fiscalID: "El Fiscal ID ya está en uso." }));
+      } else {
+        // Si isValid es false, proceder con el registro
+        // Aquí puedes agregar la lógica para registrar el taller
+        console.log("Registro exitoso");
+        // Por ejemplo, navegar a otra página
+        navigate("/success"); // Asegúrate de tener una ruta para "/success"
+      }
+    } catch (err) {
+      // Manejo de errores en la verificación
+      console.error("Error al verificar el Fiscal ID:", err);
+      alert("Ocurrió un error al verificar el Fiscal ID. Por favor, intenta nuevamente.");
+    }
+  };
 
   const handleGoBackClick = () => {
     navigate("/");
+  }
+
+  const validateForm = (): boolean => {
+    const newErrors: {
+      name?: string;
+      email?: string;
+      fiscalID?: string;
+      password?: string;
+      confirmationPassword?: string;
+    } = {};
+
+    if (!name.value.trim()) {
+      newErrors.name = "El nombre es obligatorio.";
+    }
+
+    if (!email.value.trim()) {
+      newErrors.email = "El correo electrónico es obligatorio.";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value)) {
+        newErrors.email = "Formato de correo electrónico inválido.";
+      }
+    }
+
+    if (!fiscalID.value.trim()) {
+      newErrors.fiscalID = "El Fiscal ID es obligatorio.";
+    }
+
+    if (!password.value.trim()) {
+      newErrors.password = "La contraseña es obligatoria.";
+    }
+
+    if (!confirmationPassword.value.trim()) {
+      newErrors.confirmationPassword = "La confirmación de la contraseña es obligatoria.";
+    } else if (password.value !== confirmationPassword.value) {
+      newErrors.confirmationPassword = "Las contraseñas no coinciden.";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  console.log(errors)
+
+  if (loading) {
+    return (
+      <Loading />
+    )
   }
 
   return (
