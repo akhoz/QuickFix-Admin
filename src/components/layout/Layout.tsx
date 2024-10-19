@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 
 const Layout = () => {
   return (
-    <div className="flex items-center justify-center w-screen h-screen">
+    <div className="relative flex items-center justify-center w-screen h-screen">
       <Navbar />
       <Outlet />
     </div>
