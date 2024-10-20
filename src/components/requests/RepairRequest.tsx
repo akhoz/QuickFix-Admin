@@ -42,7 +42,7 @@ function RepairRequest({ requestId, clientCedula, description }: RepairRequestPr
 
   return (
     <>
-      <div className={`flex flex-col items-start justify-center rounded-lg overflow-hidden p-3 space-y-5 w-full
+      <div className={`flex flex-col items-start justify-center rounded-lg overflow-hidden p-3 space-y-5 w-full duration-150
       ${isDarkMode ? 'bg-zinc-900 text-white' : 'bg-gray-200 text-black'}`}>
         <div className="flex flex-col items-start justify-center">
           <p className="font-bold text-lg">

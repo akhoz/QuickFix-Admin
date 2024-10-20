@@ -47,8 +47,8 @@ function RepairRequests() {
   }
 
   return (
-    <div className={`flex flex-col items-center w-full h-full space-y-10 ${isDarkMode ? 'bg-zinc-950 text-white' : 'bg-white text-black'}`}>
-      <div className="grid grid-cols-1 w-2/3 h-full place-items-center gap-2 md:grid-cols-2 lg:w-1/2">
+    <div className={`flex flex-col items-center w-full h-full space-y-10 ${isDarkMode ? 'bg-zinc-950 text-white' : 'bg-white text-black'} duration-150`}>
+      <div className="grid grid-cols-1 w-2/3 h-full place-items-center gap-2 md:grid-cols-2 lg:w-1/2" data-aos="zoom-in">
         {currentItems.map((request) => (
           <RepairRequest
             key={request._id}

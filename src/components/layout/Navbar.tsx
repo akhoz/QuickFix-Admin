@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ToggleButton from "../common/ToggleButton";
 import changeLanguage from "../../functions/changeLanguage";
 import changeTheme from "../../functions/changeTheme";
@@ -12,7 +12,7 @@ function Navbar() {
   const { t } = useTranslation();
   const { isDarkMode, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-
+  const location = useLocation();
   const handleThemeChange = () => {
     changeTheme(isDarkMode, toggleTheme);
   };
@@ -20,6 +20,8 @@ function Navbar() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-black text-white z-50">
@@ -33,15 +35,40 @@ function Navbar() {
           </p>
         </div>
         <div className="hidden lg:flex flex-row items-center justify-start space-x-5">
-          <Link to={"/home"}>Home</Link>
+          <Link
+            to="/home"
+            className={isActive("/home") ? "border-b-2 border-white" : ""}
+          >
+            Home
+          </Link>
           <p>|</p>
-          <Link to={"/requests"}>{t('repair_requests')}</Link>
+          <Link
+            to="/requests"
+            className={isActive("/requests") ? "border-b-2 border-white" : ""}
+          >
+            {t('repair_requests')}
+          </Link>
           <p>|</p>
-          <Link to={"/requests"}>Under repair</Link>
+          <Link
+            to="/under-repair"
+            className={isActive("/under-repair") ? "border-b-2 border-white" : ""}
+          >
+            Under Repair
+          </Link>
           <p>|</p>
-          <Link to={"/requests"}>History</Link>
+          <Link
+            to="/history"
+            className={isActive("/history") ? "border-b-2 border-white" : ""}
+          >
+            History
+          </Link>
           <p>|</p>
-          <Link to={"/requests"}>Account</Link>
+          <Link
+            to="/account"
+            className={isActive("/account") ? "border-b-2 border-white" : ""}
+          >
+            Account
+          </Link>
         </div>
         <div className="hidden lg:flex flex-col items-center justify-center space-y-2">
           <ToggleButton
@@ -54,10 +81,8 @@ function Navbar() {
             activeImage={"/images/moon.png"}
             inactiveImage={"/images/sun.png"}
           />
-
         </div>
 
-        {/* Ícono del menú hamburguesa en pantallas pequeñas */}
         <div className="lg:hidden flex items-center">
           <button onClick={toggleMenu} className="focus:outline-none">
             {isOpen ? (
@@ -69,26 +94,44 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Menú desplegable en pantallas pequeñas */}
       {isOpen && (
         <div className="lg:hidden bg-black text-white">
           <div className="flex flex-col items-center space-y-5 py-5">
-            <Link to={"/home"} onClick={toggleMenu}>
+            <Link
+              to="/home"
+              onClick={toggleMenu}
+              className={isActive("/home") ? "border-b-2 border-white" : ""}
+            >
               Home
             </Link>
-            <Link to={"/requests"} onClick={toggleMenu}>
+            <Link
+              to="/requests"
+              onClick={toggleMenu}
+              className={isActive("/requests") ? "border-b-2 border-white" : ""}
+            >
               {t('repair_requests')}
             </Link>
-            <Link to={"/under-repair"} onClick={toggleMenu}>
+            <Link
+              to="/under-repair"
+              onClick={toggleMenu}
+              className={isActive("/under-repair") ? "border-b-2 border-white" : ""}
+            >
               Under Repair
             </Link>
-            <Link to={"/history"} onClick={toggleMenu}>
+            <Link
+              to="/history"
+              onClick={toggleMenu}
+              className={isActive("/history") ? "border-b-2 border-white" : ""}
+            >
               History
             </Link>
-            <Link to={"/account"} onClick={toggleMenu}>
+            <Link
+              to="/account"
+              onClick={toggleMenu}
+              className={isActive("/account") ? "border-b-2 border-white" : ""}
+            >
               Account
             </Link>
-            {/* Botones de idioma y tema en pantallas pequeñas */}
             <div className="flex items-center space-x-4">
               <ToggleButton
                 onClick={changeLanguage}

@@ -25,8 +25,8 @@ function LandingPage() {
 
   return (
     <div className={`relative flex flex-row items-center justify-between w-screen h-screen 
-      ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} duration-150`}>
-      <div className="flex flex-col items-center justify-center w-full space-y-10 lg:w-3/4">
+      ${isDarkMode ? 'bg-zinc-950 text-white' : 'bg-white text-black'} duration-150`}>
+      <div className="flex flex-col items-center justify-center w-full space-y-10 lg:w-3/4" data-aos="zoom-in">
         <div className="flex flex-col items-center justify-center w-2/3 space-y-3 md:w-1/2 lg:w-5/12">
           <h1 className="font-bold text-3xl">QuickFix</h1>
           <p className="text-center">{t('welcome_landing')}</p>

@@ -15,18 +15,37 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
+
+    document.documentElement.style.transition = 'background 150ms ease';
+
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       setIsDarkMode(true);
       document.documentElement.classList.add('dark');
+      document.documentElement.style.backgroundColor = '#09090b';
     } else {
       setIsDarkMode(false);
       document.documentElement.classList.add('light');
+      document.documentElement.style.backgroundColor = '#ffffff';
     }
   }, []);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+    setIsDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      if (newMode) {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.backgroundColor = '#09090b';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        document.documentElement.style.backgroundColor = '#ffffff';
+        localStorage.setItem('theme', 'light');
+      }
+      return newMode;
+    });
   };
 
   return (
