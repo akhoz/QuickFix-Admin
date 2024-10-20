@@ -11,7 +11,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen">
+    <div className="flex items-center justify-center w-screen h-full">
       <Router>
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <LandingPage />} />

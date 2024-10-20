@@ -1,7 +1,7 @@
 
 function LogIn() {
   return (
-    <div>Log In</div>
+    <div className="w-screen">Log In</div>
   )
 }
 

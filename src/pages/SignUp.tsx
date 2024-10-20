@@ -135,7 +135,7 @@ function SignUp() {
 
   return (
     <>
-      <div className="relative flex items-center justify-center w-full h-full">
+      <div className="relative flex items-center justify-center w-full h-screen">
         <div className="flex flex-col-reverse items-center justify-center w-11/12 h-full my-10 space-y-10 lg:space-y-0 lg:my-0 lg:w-10/12 lg:flex-row">
           <div className="flex flex-col items-start justify-center h-full lg:h-2/3 lg:w-1/2">
             <GoogleMapsComponent position={position} setPosition={setPosition} />
