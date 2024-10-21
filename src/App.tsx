@@ -8,7 +8,7 @@ import RepairRequests from './pages/RepairRequests';
 import Layout from './components/layout/Layout';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   return (
     <div className="flex items-center justify-center w-screen h-full">
