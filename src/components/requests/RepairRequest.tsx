@@ -9,10 +9,11 @@ import { BiSolidError } from "react-icons/bi";
 interface RepairRequestProps {
   requestId: string,
   clientCedula: number,
+  clientName: string,
   description: string
 }
 
-function RepairRequest({ requestId, clientCedula, description }: RepairRequestProps) {
+function RepairRequest({ requestId, clientCedula, clientName, description }: RepairRequestProps) {
   const { isDarkMode } = useTheme();
   const [showModal, setShowModal] = useState(false);
 
@@ -46,6 +47,9 @@ function RepairRequest({ requestId, clientCedula, description }: RepairRequestPr
       ${isDarkMode ? 'bg-zinc-900 text-white' : 'bg-gray-200 text-black'}`}>
         <div className="flex flex-col items-start justify-center">
           <p className="font-bold text-lg">
+            {clientName}
+          </p>
+          <p>
             {clientCedula}
           </p>
           <p>

@@ -26,9 +26,10 @@ function LogIn() {
     method: "GET",
     auto: false
   }, [fiscalID, password]);
-  const { workshop: workshop, setWorkshop: setWorkshop } = useWorkshop();
+  const { setWorkshop: setWorkshop } = useWorkshop();
 
   const handleGoHomeClick = () => {
+    window.location.reload();
     navigate("/");
   }
 
